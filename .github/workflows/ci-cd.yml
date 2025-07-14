@@ -38,6 +38,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Scan image with Trivy
-        uses: aquasecurity/trivy-action@v0.11.0
+        uses: aquasecurity/trivy-action@v0
         with:
           image-ref: ci-cd-demo:${{ github.sha }}
