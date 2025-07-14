@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONPATH: \${{ github.workspace }}
+
     steps:
       - uses: actions/checkout@v3
 
@@ -30,13 +31,18 @@ jobs:
       - name: Build Docker image
         run: docker build -t ci-cd-demo:\${{ github.sha }} .
 
-      - name: Scan image with Trivy
-        uses: aquasecurity/trivy-action@v0.32.0
-        with:
-          image-ref: ci-cd-demo:\${{ github.sha }}
-          format: table
-          exit-code: 1
-          severity: CRITICAL,HIGH
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Security scan with Trivy
+        run: |
+          trivy image \
+            --exit-code 1 \
+            --severity HIGH,CRITICAL \
+            --format table \
+            ci-cd-demo:\${{ github.sha }}
 
       - name: Log in to GHCR
         uses: docker/login-action@v2
