@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -11,23 +11,23 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # Make sure Python searches the repo root for modules
     env:
-      PYTHONPATH: ${{ github.workspace }}
-
+      PYTHONPATH: \${{ github.workspace }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: List workspace files
-        run: ls -R .
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
       - name: Install pytest
         run: pip install pytest
-
       - name: Run tests
         run: pytest -q
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t ci-cd-demo:\${{ github.sha }} .
