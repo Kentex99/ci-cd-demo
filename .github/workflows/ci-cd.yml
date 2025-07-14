@@ -11,21 +11,16 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # Ensure Python can import your calc.py
     env:
       PYTHONPATH: ${{ github.workspace }}
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
       - name: Install pytest
         run: pip install pytest
-
       - name: Run tests
         run: pytest -q
 
@@ -34,6 +29,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Build Docker image
         run: docker build -t ci-cd-demo:${{ github.sha }} .
+
+  scan:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@v0.11.0
+        with:
+          image-ref: ci-cd-demo:${{ github.sha }}
