@@ -1,7 +1,7 @@
 # CI/CD Demo
 
 ![CI](https://github.com/Kentex99/ci-cd-demo/actions/workflows/ci-cd.yml/badge.svg)  
-[![Container Image](https://github.com/Kentex99/ci-cd-demo/pkgs/container/ci-cd-demo/versions)](https://github.com/Kentex99/ci-cd-demo/pkgs/container/ci-cd-demo/versions)
+[![Container Image](https://img.shields.io/badge/container-ghcr.io%2Fkentex99%2Fci--cd--demo-blue)](https://github.com/Kentex99/ci-cd-demo/pkgs/container/ci-cd-demo/versions)
 
 A minimal Python application demonstrating:
 
