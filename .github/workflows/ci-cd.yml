@@ -31,7 +31,7 @@ jobs:
         run: docker build -t ci-cd-demo:\${{ github.sha }} .
 
       - name: Scan image with Trivy
-        uses: aquasecurity/trivy-action@v0
+        uses: aquasecurity/trivy-action@v0.32.0
         with:
           image-ref: ci-cd-demo:\${{ github.sha }}
           format: table
