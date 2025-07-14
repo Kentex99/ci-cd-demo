@@ -11,6 +11,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Make sure Python searches the repo root for modules
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+
     steps:
       - uses: actions/checkout@v3
 
